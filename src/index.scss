@@ -413,6 +413,10 @@ h1 {
 }
 
 @media (max-width: 425px) {
+	.header img {
+		width: 96px;
+	}
+
 	.banner__container {
 		img {
 			height: $el-size-2xl;
