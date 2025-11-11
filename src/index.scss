@@ -1,0 +1,497 @@
+@import 'reset-css/reset.css';
+
+// === Variables ===
+// Font sizes (rem)
+$text-size-2xs: 0.625rem;
+$text-size-xs: 0.75rem;
+$text-size-sm: 0.875rem;
+$text-size-md: 1rem;
+$text-size-lg: 1.125rem;
+$text-size-xl: 1.25rem;
+$text-size-2xl: 1.5rem;
+
+// Spacing sizes (px)
+$el-size-3xs: 1px;
+$el-size-2xs: 2px;
+$el-size-xs: 4px;
+$el-size-sm: 8px;
+$el-size-md: 16px;
+$el-size-lg: 32px;
+$el-size-xl: 64px;
+$el-size-2xl: 128px;
+$el-size-3xl: 256px;
+
+// Colors
+$primary-color: #ff6060;
+$grey: hsla(0, 0%, 96%, 0.75);
+
+// Breakpoints
+$desktop-width: 1280px;
+$tablet-width: 768px;
+$mobile-width: 320px;
+
+// === Mixins ===
+// Transition
+@mixin transition($properties: all, $duration: 0.3s) {
+	transition: #{$properties} #{$duration};
+}
+
+// Apply scale
+@mixin apply-scale($scale: scale(1.05)) {
+	transform: #{$scale};
+}
+
+// === Global Styles ===
+* {
+	font-size: $text-size-md;
+	font-family: 'Montserrat', sans-serif;
+	box-sizing: border-box;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+	position: relative;
+}
+
+h1 {
+	color: white;
+	font-size: 48px;
+	text-shadow: 0px $el-size-2xs 0px black;
+}
+
+.main-color {
+	color: $primary-color;
+}
+
+.grey {
+	color: $grey;
+}
+
+// === Header ===
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: $desktop-width;
+	margin: $el-size-lg auto;
+	padding: 0 $el-size-lg;
+
+	img {
+		width: $el-size-2xl;
+		@include transition();
+
+		&:hover {
+			@include apply-scale();
+		}
+	}
+
+	ul {
+		display: flex;
+		flex-direction: row;
+		gap: $el-size-lg;
+
+		a {
+			&::after {
+				content: '';
+				width: 0;
+				height: $el-size-3xs;
+				background-color: black;
+				position: absolute;
+				left: 0;
+				bottom: -$el-size-sm;
+				@include transition();
+			}
+
+			&:hover::after {
+				width: 100%;
+			}
+		}
+	}
+}
+
+// === Banner ===
+.banner__container {
+	max-width: $desktop-width;
+	margin: $el-size-md auto;
+	position: relative;
+	padding: 0 $el-size-lg;
+
+	img {
+		width: 100%;
+		height: $el-size-3xl;
+		object-fit: cover;
+		border-radius: $el-size-md;
+		filter: brightness(50%);
+	}
+
+	h1 {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		transform: translate(0, -50%);
+		width: 100%;
+		text-align: center;
+	}
+}
+
+// === Accommodation Card ===
+.logements-gallery {
+	max-width: $desktop-width;
+	padding: 0 $el-size-lg;
+	margin: $el-size-lg auto;
+
+	&__container {
+		background: $grey;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-gap: $el-size-lg;
+		border-radius: $el-size-md;
+		padding: $el-size-lg;
+
+		&__single-logement {
+			position: relative;
+			border-radius: $el-size-md;
+			overflow: hidden;
+			aspect-ratio: 1/1;
+			@include transition();
+
+			h2 {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 75%;
+				padding-left: $el-size-lg;
+				padding-bottom: $el-size-lg;
+				color: white;
+				z-index: 1;
+				font-size: $text-size-lg;
+			}
+
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			&::before {
+				content: '';
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background: linear-gradient(rgb(255 255 255 / 20%), rgb(0 0 0 / 80%));
+				z-index: 1;
+				pointer-events: none;
+			}
+
+			&:hover {
+				@include apply-scale();
+			}
+		}
+	}
+}
+
+// === Collapse ===
+.collapse {
+	display: flex;
+	flex-direction: column;
+
+	div {
+		background: $primary-color;
+		display: flex;
+		justify-content: space-between;
+		padding: $el-size-md;
+
+		h2 {
+			cursor: pointer;
+			color: white;
+			font-weight: bold;
+		}
+
+		i {
+			color: white;
+		}
+	}
+
+	p,
+	ul {
+		background-color: $grey;
+		overflow: hidden;
+		transition: max-height 0.3s, padding 0.6s;
+		max-height: 0px;
+		padding: 0px $el-size-md;
+		display: flex;
+		flex-direction: column;
+		gap: $el-size-xs;
+		line-height: 1.125;
+	}
+}
+
+// === Accommodation Sheet ===
+.accomodation-sheet {
+	max-width: $desktop-width;
+	margin: $el-size-lg auto;
+	padding: 0 $el-size-lg;
+	display: flex;
+	flex-direction: column;
+	gap: $el-size-lg;
+
+	&__swap-image {
+		position: relative;
+
+		img {
+			height: 400px;
+			width: 100%;
+			object-fit: cover;
+			border-radius: $el-size-md;
+		}
+
+		.fa-chevron-left {
+			position: absolute;
+			top: 50%;
+			transform: translate(0, -50%);
+			left: $el-size-lg;
+			color: white;
+			font-size: $el-size-xl;
+			cursor: pointer;
+			text-shadow: $el-size-3xs $el-size-3xs $el-size-xs black;
+		}
+
+		.fa-chevron-right {
+			position: absolute;
+			top: 50%;
+			transform: translate(0, -50%);
+			right: $el-size-lg;
+			color: white;
+			font-size: $el-size-xl;
+			cursor: pointer;
+			text-shadow: $el-size-3xs $el-size-3xs $el-size-xs black;
+		}
+	}
+
+	&__infos {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		&__semantic {
+			display: flex;
+			flex-direction: column;
+			gap: $el-size-md;
+
+			h1 {
+				color: $primary-color;
+				font-size: 36px;
+				text-shadow: none;
+			}
+
+			&__tags {
+				display: flex;
+				gap: $el-size-lg;
+
+				p {
+					background: $primary-color;
+					padding: $el-size-sm $el-size-lg;
+					border-radius: $el-size-md;
+					color: white;
+					font-weight: bold;
+				}
+			}
+		}
+
+		&__owner {
+			display: flex;
+			flex-direction: column;
+			gap: $el-size-lg;
+			align-items: flex-end;
+
+			&__identity {
+				display: flex;
+				gap: $el-size-md;
+				align-items: center;
+				color: $primary-color;
+
+				img {
+					width: $el-size-xl;
+					height: $el-size-xl;
+					border-radius: 100%;
+				}
+			}
+
+			&__stars {
+				display: flex;
+				gap: $el-size-sm;
+			}
+		}
+	}
+
+	&__amenities {
+		display: flex;
+		justify-content: space-between;
+		gap: $el-size-xl;
+	}
+}
+
+// === 404 ===
+.error-404 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: $el-size-xl;
+	margin: $el-size-xl 0;
+
+	h1 {
+		color: $primary-color;
+		text-shadow: none;
+		font-size: $el-size-3xl;
+	}
+
+	p {
+		color: $primary-color;
+		font-size: $text-size-2xl;
+	}
+
+	a {
+		text-decoration: underline;
+		@include transition();
+	}
+
+	a:hover {
+		font-size: $text-size-lg;
+	}
+}
+
+// === About ===
+.about-section__collapse {
+	max-width: $desktop-width;
+	margin: $el-size-lg auto;
+	padding: 0 $el-size-lg;
+	display: flex;
+	flex-direction: column;
+	gap: $el-size-lg;
+}
+
+// === Footer ===
+.footer {
+	background-color: black;
+	padding: $el-size-xl;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: $el-size-lg;
+
+	a {
+		@include transition();
+
+		&:hover {
+			@include apply-scale();
+		}
+
+		img {
+			width: $el-size-2xl;
+		}
+	}
+
+	p {
+		color: white;
+	}
+}
+
+@media (max-width: 768px) {
+	.logements-gallery__container {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.accomodation-sheet__amenities {
+		flex-direction: column;
+		gap: $el-size-md;
+	}
+
+	.collapse {
+		width: 100% !important;
+	}
+}
+
+@media (max-width: 425px) {
+	.header img {
+		width: 96px;
+	}
+
+	.banner__container {
+		img {
+			height: $el-size-2xl;
+		}
+
+		h1 {
+			left: initial;
+			text-align: left;
+			padding-right: 33%;
+			padding-left: $el-size-lg;
+			font-size: $text-size-2xl;
+		}
+	}
+
+	.logements-gallery__container {
+		grid-template-columns: repeat(1, 1fr);
+		padding: 0;
+
+		&__single-logement h2 {
+			line-height: 1.25;
+		}
+	}
+
+	.accomodation-sheet {
+		gap: $el-size-md;
+		&__infos {
+			flex-direction: column;
+			gap: $el-size-md;
+
+			&__semantic {
+				&__tags {
+					display: flex;
+					gap: $el-size-md;
+					flex-wrap: wrap;
+				}
+
+				h1 {
+					font-size: $text-size-2xl;
+				}
+			}
+
+			&__owner {
+				flex-direction: row-reverse;
+				align-items: center;
+				justify-content: space-between;
+			}
+		}
+
+		&__swap-image {
+			img {
+				height: $el-size-3xl;
+			}
+
+			.fa-chevron-right {
+				font-size: $el-size-lg;
+			}
+
+			.fa-chevron-left {
+				font-size: $el-size-lg;
+			}
+		}
+	}
+
+	.error-404 {
+		margin: $el-size-xl 0;
+		padding: 0 $el-size-xl;
+
+		h1 {
+			font-size: 8rem;
+		}
+
+		p {
+			font-size: $text-size-2xl;
+			text-align: center;
+			line-height: 1.25;
+		}
+	}
+}
